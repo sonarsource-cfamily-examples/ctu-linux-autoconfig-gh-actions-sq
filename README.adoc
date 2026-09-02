@@ -1,0 +1,98 @@
+= C++ example project demonstrating Cross-Translation-Unit (CTU) analysis, scanned on SonarQube Server using AutoConfig
+
+:uri-qg-status: https://next.sonarqube.com/sonarqube/dashboard?id=sonarsource-cfamily-examples_ctu-linux-autoconfig-gh-actions-sq
+:img-qg-status: https://next.sonarqube.com/sonarqube/api/project_badges/measure?project=sonarsource-cfamily-examples_ctu-linux-autoconfig-gh-actions-sq&metric=alert_status
+:uri-build-status: https://github.com/sonarsource-cfamily-examples/ctu-linux-autoconfig-gh-actions-sq/actions/workflows/build.yml
+:img-build-status: https://github.com/sonarsource-cfamily-examples/ctu-linux-autoconfig-gh-actions-sq/actions/workflows/build.yml/badge.svg
+
+
+image:{img-build-status}[Build Status, link={uri-build-status}]
+image:{img-qg-status}[Quality Gate Status,link={uri-qg-status}]
+
+*This project features an issue that is only detected when Cross-Translation-Unit (CTU) analysis is enabled.*
+
+This project is analysed on https://next.sonarqube.com/sonarqube/dashboard?id=sonarsource-cfamily-examples_ctu-linux-autoconfig-gh-actions-sq[SonarQube Server]!
+
+It is very easy to analyze a C, C++ and Objective-C project with SonarQube using AutoConfig:
+
+. Create a `sonar-project.properties` file to store your configuration
+. In your `.github/workflows/build.yml` file:
+.. Set the environment variable `SONAR_HOST_URL` to your server url (e.g.: https://example.com:9000)
+.. Analyze your code using https://github.com/SonarSource/sonarqube-scan-action[the SonarSource/sonarqube-scan-action action]
+. Ensure that your token is stored as a secret in your repository (`SONARQUBE_TOKEN` in this example project). If you don't have a token yet, you can generate a new one in SonarQube Server (see https://docs.sonarsource.com/sonarqube-server/latest/user-guide/managing-tokens/[Managing your tokens]).
+
+You can take a look at the link:sonar-project.properties[sonar-project.properties] and link:.github/workflows/build.yml[build.yml] to see it in practice.
+
+== Enabling CTU analysis
+
+Due to its intensive resource requirements, we recommend enabling Cross-Translation-Unit (CTU) analysis strictly on specialized branches for large projects.
+
+* First, enable CTU analysis for specific branches via the UI:
+
+image::https://github.com/user-attachments/assets/9e95becd-d203-46bb-a1ba-fece94122164[,600]
+image::https://github.com/user-attachments/assets/3ed69e8d-1de1-462c-805c-10c2f14da884[,600]
+
+_You can also set this in the_ `sonar-project.properties` _file:_ `sonar.cfamily.ctuAnalysis.branchSubstring=ctu`
+
+* Second, make sure to set up the filesystem analysis cache for these specific branches via the `sonar-project.properties` file:
+
+```
+sonar.cfamily.analysisCache.mode=fs
+sonar.cfamily.analysisCache.path=cfamily-cache
+```
+
+_Alternatively, manual cache setup can be bypassed by enabling experimental support for the server-side cache via the UI_
+
+image::https://github.com/user-attachments/assets/1a3b520d-7a41-4aaa-a66c-7b9243365570[,400,align="center"]
+
+_or_ `sonar.cfamily.ctuAnalysis.experimentalAllowServerCache=true`.
+_Please be aware of the associated caveats._
+
+* Finally, simply trigger an analysis on the corresponding branch.
+
+= Documentation
+
+- https://docs.sonarsource.com/sonarqube-server/latest/analyzing-source-code/languages/c-family/overview/[C/C++/Objective-C analysis overview]
+- https://docs.sonarsource.com/sonarqube-server/latest/analyzing-source-code/languages/c-family/customizing-the-analysis/#ctu-symbolic-execution[CTU analysis]
+- https://docs.sonarsource.com/sonarqube-server/latest/devops-platform-integration/github-integration/introduction/[GitHub Integration]
+- https://docs.sonarsource.com/sonarqube-server/latest/analyzing-source-code/languages/c-family/customizing-the-analysis/#autoconfig-specific-properties[AutoConfig-specific properties]
+
+= Code Description
+
+An example of flawed C++ code demonstrating a bug only detectable with Cross Translation Unit (CTU) analysis. It can be https://github.com/sonarsource-cfamily-examples/automatic-analysis-sc[analyzed automatically], but it can also be compiled with different build systems using different CI pipelines on Linux, macOS, and Windows.
+
+Other repositories in https://github.com/sonarsource-cfamily-examples[this collection] add a specific build system, platform, and CI.
+The downstream repositories are analyzed either with https://www.sonarsource.com/products/sonarqube/[SonarQube Server] or https://www.sonarsource.com/products/sonarcloud/[SonarQube Cloud].
+
+You can find examples for:
+
+* https://github.com/sonarsource-cfamily-examples?q=linux[Linux]
+* https://github.com/sonarsource-cfamily-examples?q=macos[macOS]
+* https://github.com/sonarsource-cfamily-examples?q=windows[Windows]
+
+Using the following build systems:
+
+* https://github.com/sonarsource-cfamily-examples?q=cmake[CMake]
+* https://github.com/sonarsource-cfamily-examples?q=autotools[GNU Autotools]
+* https://github.com/sonarsource-cfamily-examples?q=xcode[Xcode]
+* https://github.com/sonarsource-cfamily-examples?q=msbuild[MSBuild]
+
+Running on the following CI services:
+
+* https://github.com/sonarsource-cfamily-examples?q=azure[Azure DevOps]
+* https://github.com/sonarsource-cfamily-examples?q=gh-actions[GitHub Actions]
+* https://github.com/sonarsource-cfamily-examples?q=travis[Travis]
+* https://github.com/sonarsource-cfamily-examples?q=jenkins[Jenkins]
+* https://github.com/sonarsource-cfamily-examples?q=gitlab[GitLab CI]
+* https://github.com/sonarsource-cfamily-examples?q=bitbucket[BitBucket Pipelines]
+* Additionally, https://github.com/orgs/sonarsource-cfamily-examples/repositories?q=otherci[generic examples] demonstrate integration with other CIs and https://github.com/orgs/sonarsource-cfamily-examples/repositories?q=manual[manual-configuration examples] should help you if you are running locally.
+
+Configured for analysis on:
+
+* https://github.com/sonarsource-cfamily-examples?q=-sq[SonarQube Server]
+* https://github.com/sonarsource-cfamily-examples?q=-sc[SonarQube Cloud]
+
+You can find also a few examples demonstrating:
+
+* https://github.com/orgs/sonarsource-cfamily-examples/repositories?q=compdb[The use of Compilation Database (compile_commands.json)]
+* https://github.com/orgs/sonarsource-cfamily-examples/repositories?q=topic%3Acoverage[Test coverage]

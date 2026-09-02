@@ -1,0 +1,26 @@
+name: Build
+on:
+  push:
+    branches:
+      - main
+      - ctu-analysis
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  build:
+    name: Analyze
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Restore/save analysis cache
+        if: contains(github.ref_name, 'ctu') # Set up filesystem cache only for branches containing 'ctu' in their name
+        uses: actions/cache@v4
+        with:
+          path: cfamily-cache
+          key: cfamily-cache-${{ github.sha }}
+          restore-keys: cfamily-cache-
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v7
+        env:
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }} # SonarQube URL is stored in a GitHub secret
+          SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
