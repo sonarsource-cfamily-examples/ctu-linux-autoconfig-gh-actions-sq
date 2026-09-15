@@ -1,7 +1,7 @@
 = C++ example project demonstrating Cross-Translation-Unit (CTU) analysis, scanned on SonarQube Server using AutoConfig
 
-:uri-qg-status: https://next.sonarqube.com/sonarqube/dashboard?id=sonarsource-cfamily-examples_ctu-linux-autoconfig-gh-actions-sq
-:img-qg-status: https://next.sonarqube.com/sonarqube/api/project_badges/measure?project=sonarsource-cfamily-examples_ctu-linux-autoconfig-gh-actions-sq&metric=alert_status
+:uri-qg-status: https://next.sonarqube.com/sonarqube/dashboard?id=sonarsource-cfamily-examples_ctu-linux-autoconfig-gh-actions-sq&branch=ctu-analysis
+:img-qg-status: https://next.sonarqube.com/sonarqube/api/project_badges/measure?project=sonarsource-cfamily-examples_ctu-linux-autoconfig-gh-actions-sq&branch=ctu-analysis&metric=alert_status
 :uri-build-status: https://github.com/sonarsource-cfamily-examples/ctu-linux-autoconfig-gh-actions-sq/actions/workflows/build.yml
 :img-build-status: https://github.com/sonarsource-cfamily-examples/ctu-linux-autoconfig-gh-actions-sq/actions/workflows/build.yml/badge.svg
 
